@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(29);
+    expect(scenarioRegistry).toHaveLength(32);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -33,6 +33,9 @@ describe("scenarioRegistry", () => {
       "runner-on-first-right-single-first-to-third",
       "bases-empty-gap-double-relay-second",
       "bases-empty-left-center-bloop",
+      "bases-empty-right-center-bloop",
+      "bases-empty-first-base-foul-pop",
+      "bases-empty-third-base-foul-pop",
     ]);
   });
 
@@ -135,7 +138,7 @@ describe("scenarioRegistry", () => {
 
   it("keeps the first-base foul pop anchored in 1B priority with no forced throw", () => {
     const scenario = scenarioRegistry.find(
-      (entry) => entry.summary.id === "bases-empty-left-center-bloop",
+      (entry) => entry.summary.id === "bases-empty-first-base-foul-pop",
     );
 
     expect(scenario).not.toBeUndefined();
@@ -143,8 +146,8 @@ describe("scenarioRegistry", () => {
     const coverPositions = scenario?.covers.map((assignment) => assignment.position);
     const backupPositions = scenario?.backups.map((assignment) => assignment.position);
 
-    expect(coverPositions).toEqual(["CF", "2B", "SS"]);
-    expect(backupPositions).toEqual(["LF", "RF"]);
+    expect(coverPositions).toEqual(["1B", "C", "2B"]);
+    expect(backupPositions).toEqual(["P", "RF", "CF", "LF"]);
     expect(scenario?.animation.throwEvents).toEqual([]);
   });
 });

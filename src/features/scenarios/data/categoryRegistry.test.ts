@@ -55,7 +55,12 @@ describe("scenarioCategoryRegistry", () => {
         "runner-on-first-right-single-first-to-third",
         "bases-empty-gap-double-relay-second",
       ],
-      ["bases-empty-left-center-bloop"],
+      [
+        "bases-empty-left-center-bloop",
+        "bases-empty-right-center-bloop",
+        "bases-empty-first-base-foul-pop",
+        "bases-empty-third-base-foul-pop",
+      ],
     ]);
 
     expect(getScenarioCategoryById("special-defenses")).toBeNull();
@@ -110,7 +115,12 @@ describe("scenarioCategoryRegistry", () => {
 
     expect(
       getScenarioSummariesByCategoryId("priority-and-foul-pops").map((scenario) => scenario.id),
-    ).toEqual(["bases-empty-left-center-bloop"]);
+    ).toEqual([
+      "bases-empty-left-center-bloop",
+      "bases-empty-right-center-bloop",
+      "bases-empty-first-base-foul-pop",
+      "bases-empty-third-base-foul-pop",
+    ]);
 
     expect(
       getScenarioSummariesByCategoryId("basic-infield-routines").map((scenario) => scenario.id),
