@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(24);
+    expect(scenarioRegistry).toHaveLength(29);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -27,6 +27,11 @@ describe("scenarioRegistry", () => {
       "runner-on-third-shallow-left-fly-home-throw",
       "runner-on-third-medium-center-fly-cutoff-home",
       "runner-on-second-left-single-cutoff-home",
+      "runner-on-second-center-single-cutoff-home",
+      "runner-on-second-right-single-cutoff-third-home",
+      "runner-on-first-left-single-first-to-third",
+      "runner-on-first-right-single-first-to-third",
+      "bases-empty-gap-double-relay-second",
       "bases-empty-left-center-bloop",
     ]);
   });
@@ -110,5 +115,36 @@ describe("scenarioRegistry", () => {
     expect(coverPositions).toEqual(["SS", "C", "3B"]);
     expect(throwEvent?.toActor).toBe("SS");
     expect(runnerOnThirdTrack?.keyframes.at(-1)?.visible).not.toBe(false);
+  });
+
+  it("keeps the right single relay anchored in the 1B cutoff and 3B stop", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "runner-on-second-right-single-cutoff-third-home",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const coverPositions = scenario?.covers.map((assignment) => assignment.position);
+    const throwEvent = scenario?.animation.throwEvents[0];
+    const runnerTrack = scenario?.animation.actorTracks.find((track) => track.actorId === "RUNNER_2");
+
+    expect(coverPositions).toEqual(["1B", "3B", "2B", "C"]);
+    expect(throwEvent?.toActor).toBe("1B");
+    expect(runnerTrack?.keyframes.at(-1)?.visible).not.toBe(false);
+  });
+
+  it("keeps the first-base foul pop anchored in 1B priority with no forced throw", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "bases-empty-left-center-bloop",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const coverPositions = scenario?.covers.map((assignment) => assignment.position);
+    const backupPositions = scenario?.backups.map((assignment) => assignment.position);
+
+    expect(coverPositions).toEqual(["CF", "2B", "SS"]);
+    expect(backupPositions).toEqual(["LF", "RF"]);
+    expect(scenario?.animation.throwEvents).toEqual([]);
   });
 });

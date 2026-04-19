@@ -47,7 +47,14 @@ describe("scenarioCategoryRegistry", () => {
         "runner-on-third-shallow-left-fly-home-throw",
         "runner-on-third-medium-center-fly-cutoff-home",
       ],
-      ["runner-on-second-left-single-cutoff-home"],
+      [
+        "runner-on-second-left-single-cutoff-home",
+        "runner-on-second-center-single-cutoff-home",
+        "runner-on-second-right-single-cutoff-third-home",
+        "runner-on-first-left-single-first-to-third",
+        "runner-on-first-right-single-first-to-third",
+        "bases-empty-gap-double-relay-second",
+      ],
       ["bases-empty-left-center-bloop"],
     ]);
 
@@ -89,6 +96,21 @@ describe("scenarioCategoryRegistry", () => {
       "runner-on-third-shallow-left-fly-home-throw",
       "runner-on-third-medium-center-fly-cutoff-home",
     ]);
+
+    expect(
+      getScenarioSummariesByCategoryId("outfield-hits-cutoffs-relays").map((scenario) => scenario.id),
+    ).toEqual([
+      "runner-on-second-left-single-cutoff-home",
+      "runner-on-second-center-single-cutoff-home",
+      "runner-on-second-right-single-cutoff-third-home",
+      "runner-on-first-left-single-first-to-third",
+      "runner-on-first-right-single-first-to-third",
+      "bases-empty-gap-double-relay-second",
+    ]);
+
+    expect(
+      getScenarioSummariesByCategoryId("priority-and-foul-pops").map((scenario) => scenario.id),
+    ).toEqual(["bases-empty-left-center-bloop"]);
 
     expect(
       getScenarioSummariesByCategoryId("basic-infield-routines").map((scenario) => scenario.id),
