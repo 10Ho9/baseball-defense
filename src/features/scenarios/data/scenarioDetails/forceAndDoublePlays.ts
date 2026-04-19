@@ -34,7 +34,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
     fallbackOutTarget: "Mindestens das Force-Out an 2B sichern",
     positions: [
       position("P", {
-        path: [p(63, 77)],
+        path: [p(60, 67), p(82.5, 68)],
         prePitchAlignmentDe: "Bereit für einen Groundball zur rechten Seite",
         firstStepDe: "Sofort Richtung 1B-Foul-Line laufen",
         primaryResponsibilityDe: "Backup für den Weiterwurf an 1B",
@@ -52,7 +52,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
       }),
       position("1B", {
         start: DOUBLE_PLAY_1B_START,
-        path: [p(71, 67)],
+        path: [p(69.5, 63.2)],
         prePitchAlignmentDe: "Läufer halten, dann an den Bag arbeiten",
         firstStepDe: "Nach dem Contact direkt zur Base zurück",
         primaryResponsibilityDe: "Den Pivot-Wurf an 1B abschliessen",
@@ -61,7 +61,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         communicationCueDe: "Grosses Target für den Pivot geben",
       }),
       position("2B", {
-        path: [p(62, 58)],
+        path: [p(56, 54.5), p(51.5, 45.5)],
         prePitchAlignmentDe: "Double-Play-Tiefe rechts von 2B",
         firstStepDe: "Zum Ball arbeiten und den Feed schnell lösen",
         primaryResponsibilityDe: "Groundball sauber aufnehmen und an den SS feeden",
@@ -79,7 +79,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         throwPriority: ["3B"],
       }),
       position("SS", {
-        path: [p(50, 46), p(52, 47)],
+        path: [p(50.5, 44.5), p(47, 46.5)],
         prePitchAlignmentDe: "Links vom Keystone, Double-Play-Fussarbeit bereit",
         firstStepDe: "Zur 2B breaken und den Feed auf der Bag nehmen",
         primaryResponsibilityDe: "Force-Out an 2B treten und an 1B weiterwerfen",
@@ -89,7 +89,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         communicationCueDe: "'Bag!' und danach 'One!' callen",
       }),
       position("LF", {
-        path: [p(25.5, 41.5)],
+        path: [p(34, 36)],
         prePitchAlignmentDe: "Leicht Richtung Left-Center geöffnet",
         firstStepDe: "Richtung Infield einschieben",
         primaryResponsibilityDe: "Linkes Gap sichern",
@@ -97,7 +97,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         throwPriority: ["SS", "3B"],
       }),
       position("CF", {
-        path: [p(51.5, 33.5)],
+        path: [p(50, 36)],
         prePitchAlignmentDe: "Etwas Richtung Right-Center lesend",
         firstStepDe: "Ein paar Schritte zur 2B-Linie arbeiten",
         primaryResponsibilityDe: "Middle absichern, falls der Ball durchgeht",
@@ -105,7 +105,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         throwPriority: ["2B"],
       }),
       position("RF", {
-        path: [p(73.5, 40)],
+        path: [p(80, 44)],
         prePitchAlignmentDe: "Flach positioniert für einen durchgehenden Ball",
         firstStepDe: "Schritt Richtung rechte Linie und dann nach innen",
         primaryResponsibilityDe: "Ball stoppen, falls er durch 2B geht",
@@ -119,7 +119,9 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
     ],
     backups: [
       support("P", "1B-Foul-Line", "Backup für den Weiterwurf des SS an 1B."),
+      support("LF", "Linke Tiefe", "Ordnet lange Rebounds auf der linken Seite und Richtung 3B."),
       support("CF", "2B tiefer", "Sichert das Areal hinter dem Turn."),
+      support("RF", "1B-Linie", "Erster Outfield-Backup hinter dem letzten Wurf an 1B."),
     ],
     animation: {
       durationMs: 4800,
@@ -137,15 +139,15 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
           [3900, FIRST_BASE, false],
           [4800, FIRST_BASE, false],
         ]),
-        track("P", [[0, STARTS.P], [4800, p(63, 77)]]),
+        track("P", [[0, STARTS.P], [1800, p(60, 67)], [4800, p(82.5, 68)]]),
         track("C", [[0, STARTS.C], [4800, p(50, 84)]]),
-        track("1B", [[0, DOUBLE_PLAY_1B_START], [1800, p(71, 67)], [4800, p(71, 67)]]),
-        track("2B", [[0, STARTS["2B"]], [1700, p(62, 58)], [4800, p(62, 58)]]),
+        track("1B", [[0, DOUBLE_PLAY_1B_START], [2400, p(69.5, 63.2)], [4800, p(69.5, 63.2)]]),
+        track("2B", [[0, STARTS["2B"]], [1700, p(56, 54.5)], [2400, p(51.5, 45.5)], [4800, p(51.5, 45.5)]]),
         track("3B", [[0, STARTS["3B"]], [4800, p(29, 67)]]),
-        track("SS", [[0, STARTS.SS], [1800, p(46, 49)], [2600, p(50, 46)], [4800, p(52, 47)]]),
-        track("LF", [[0, STARTS.LF], [4800, p(25.5, 41.5)]]),
-        track("CF", [[0, STARTS.CF], [4800, p(51.5, 33.5)]]),
-        track("RF", [[0, STARTS.RF], [4800, p(73.5, 40)]]),
+        track("SS", [[0, STARTS.SS], [2200, p(50.5, 44.5)], [3200, p(47, 46.5)], [4800, p(47, 46.5)]]),
+        track("LF", [[0, STARTS.LF], [4800, p(34, 36)]]),
+        track("CF", [[0, STARTS.CF], [4800, p(50, 36)]]),
+        track("RF", [[0, STARTS.RF], [4800, p(80, 44)]]),
         track("RUNNER_1", [
           [0, FIRST_BASE, true],
           [1200, p(63, 57), true],
@@ -155,12 +157,12 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
         ]),
         track("BALL", [
           [0, p(50, 84), true],
-          [1000, p(58, 68), true],
-          [1800, p(62, 58), true],
-          [2500, p(50, 46), true],
-          [3600, p(61, 58), true],
-          [4300, p(71, 67), true],
-          [4800, p(71, 67), false],
+          [1000, p(56, 60), true],
+          [1700, p(56, 54.5), true],
+          [2500, p(50.5, 44.5), true],
+          [3600, p(59, 55), true],
+          [4300, p(69.5, 63.2), true],
+          [4800, p(69.5, 63.2), false],
         ]),
       ],
       throwEvents: [
@@ -714,6 +716,7 @@ export const forceAndDoublePlaysScenarioDetails: ScenarioDetail[] = [
     backups: [
       support("RF", "1B-Linie", "Erster Notfall-Backup hinter dem Rückwurf an 1B."),
       support("CF", "2B tief", "Sichert das Areal hinter dem Force-Out."),
+      support("LF", "Linke Tiefe", "Sichert den langen Gegenfehler auf der Rückseite des Plays."),
       support("P", "Rechte Infield-Linie", "Unterstützt den langen Rebound hinter 1B."),
     ],
     animation: {
