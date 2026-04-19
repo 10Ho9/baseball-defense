@@ -33,7 +33,14 @@ describe("scenarioCategoryRegistry", () => {
         "runners-on-first-second-middle-grounder-force-third",
         "bases-loaded-middle-grounder-home-to-first",
       ],
-      ["runner-on-first-bunt-third-base-side"],
+      [
+        "runner-on-first-bunt-third-base-side",
+        "runner-on-first-bunt-first-base-side",
+        "runners-on-first-second-sac-bunt-third-base-side",
+        "runners-on-first-second-sac-bunt-first-base-side",
+        "runner-on-third-safety-squeeze-defense",
+        "runner-on-third-suicide-squeeze-wheel-play",
+      ],
       ["runner-on-third-infield-in-grounder"],
       ["runner-on-second-left-single-cutoff-home"],
       ["bases-empty-left-center-bloop"],
@@ -49,7 +56,14 @@ describe("scenarioCategoryRegistry", () => {
 
     expect(
       getScenarioSummariesByCategoryId("bunts-and-squeezes").map((scenario) => scenario.id),
-    ).toEqual(["runner-on-first-bunt-third-base-side"]);
+    ).toEqual([
+      "runner-on-first-bunt-third-base-side",
+      "runner-on-first-bunt-first-base-side",
+      "runners-on-first-second-sac-bunt-third-base-side",
+      "runners-on-first-second-sac-bunt-first-base-side",
+      "runner-on-third-safety-squeeze-defense",
+      "runner-on-third-suicide-squeeze-wheel-play",
+    ]);
 
     expect(
       getScenarioSummariesByCategoryId("force-and-double-plays").map((scenario) => scenario.id),

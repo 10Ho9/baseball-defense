@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(16);
+    expect(scenarioRegistry).toHaveLength(21);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -17,6 +17,11 @@ describe("scenarioRegistry", () => {
       "runners-on-first-second-middle-grounder-force-third",
       "bases-loaded-middle-grounder-home-to-first",
       "runner-on-first-bunt-third-base-side",
+      "runner-on-first-bunt-first-base-side",
+      "runners-on-first-second-sac-bunt-third-base-side",
+      "runners-on-first-second-sac-bunt-first-base-side",
+      "runner-on-third-safety-squeeze-defense",
+      "runner-on-third-suicide-squeeze-wheel-play",
       "runner-on-third-infield-in-grounder",
       "runner-on-second-left-single-cutoff-home",
       "bases-empty-left-center-bloop",
@@ -70,5 +75,21 @@ describe("scenarioRegistry", () => {
     expect(backupPositions).toEqual(["P", "LF", "RF", "CF"]);
     expect(throwEvents?.map((event) => event.toActor)).toEqual(["C", "1B"]);
     expect(homeArrivalFrame?.atMs).toBe(throwEvents?.[0].startMs + throwEvents?.[0].durationMs);
+  });
+
+  it("keeps the suicide squeeze wheel play anchored in the wheel rotation to home", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "runner-on-third-suicide-squeeze-wheel-play",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const coverPositions = scenario?.covers.map((assignment) => assignment.position);
+    const backupPositions = scenario?.backups.map((assignment) => assignment.position);
+    const throwEvent = scenario?.animation.throwEvents[0];
+
+    expect(coverPositions).toEqual(["SS", "2B", "C"]);
+    expect(backupPositions).toEqual(["LF", "RF", "CF"]);
+    expect(throwEvent?.toActor).toBe("C");
   });
 });
