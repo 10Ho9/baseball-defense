@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(21);
+    expect(scenarioRegistry).toHaveLength(24);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -23,6 +23,9 @@ describe("scenarioRegistry", () => {
       "runner-on-third-safety-squeeze-defense",
       "runner-on-third-suicide-squeeze-wheel-play",
       "runner-on-third-infield-in-grounder",
+      "bases-loaded-infield-in",
+      "runner-on-third-shallow-left-fly-home-throw",
+      "runner-on-third-medium-center-fly-cutoff-home",
       "runner-on-second-left-single-cutoff-home",
       "bases-empty-left-center-bloop",
     ]);
@@ -91,5 +94,21 @@ describe("scenarioRegistry", () => {
     expect(coverPositions).toEqual(["SS", "2B", "C"]);
     expect(backupPositions).toEqual(["LF", "RF", "CF"]);
     expect(throwEvent?.toActor).toBe("C");
+  });
+
+  it("keeps the medium center fly decision anchored in the SS cutoff hold", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "runner-on-third-medium-center-fly-cutoff-home",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const coverPositions = scenario?.covers.map((assignment) => assignment.position);
+    const runnerOnThirdTrack = scenario?.animation.actorTracks.find((track) => track.actorId === "RUNNER_3");
+    const throwEvent = scenario?.animation.throwEvents[0];
+
+    expect(coverPositions).toEqual(["SS", "C", "3B"]);
+    expect(throwEvent?.toActor).toBe("SS");
+    expect(runnerOnThirdTrack?.keyframes.at(-1)?.visible).not.toBe(false);
   });
 });

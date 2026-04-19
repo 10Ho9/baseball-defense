@@ -41,7 +41,12 @@ describe("scenarioCategoryRegistry", () => {
         "runner-on-third-safety-squeeze-defense",
         "runner-on-third-suicide-squeeze-wheel-play",
       ],
-      ["runner-on-third-infield-in-grounder"],
+      [
+        "runner-on-third-infield-in-grounder",
+        "bases-loaded-infield-in",
+        "runner-on-third-shallow-left-fly-home-throw",
+        "runner-on-third-medium-center-fly-cutoff-home",
+      ],
       ["runner-on-second-left-single-cutoff-home"],
       ["bases-empty-left-center-bloop"],
     ]);
@@ -74,6 +79,15 @@ describe("scenarioCategoryRegistry", () => {
       "runner-on-first-1b-double-play-3-6-3",
       "runners-on-first-second-middle-grounder-force-third",
       "bases-loaded-middle-grounder-home-to-first",
+    ]);
+
+    expect(
+      getScenarioSummariesByCategoryId("run-prevention-and-tag-ups").map((scenario) => scenario.id),
+    ).toEqual([
+      "runner-on-third-infield-in-grounder",
+      "bases-loaded-infield-in",
+      "runner-on-third-shallow-left-fly-home-throw",
+      "runner-on-third-medium-center-fly-cutoff-home",
     ]);
 
     expect(
