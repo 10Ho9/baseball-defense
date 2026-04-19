@@ -177,4 +177,84 @@ describe("scenarioRegistry", () => {
     expect(throwEvents?.map((event) => event.toActor)).toEqual(["SS", "C"]);
     expect(runnerOnThirdTrack?.keyframes.at(-1)?.visible).toBe(false);
   });
+
+  it("keeps outfield-origin home plays in mid-depth rebound support instead of pulling corner outfielders to the plate", () => {
+    const checks = [
+      {
+        id: "runner-on-third-shallow-left-fly-home-throw",
+        positions: ["CF", "RF"] as const,
+      },
+      {
+        id: "runner-on-third-medium-center-fly-cutoff-home",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "runner-on-second-left-single-cutoff-home",
+        positions: ["CF", "RF"] as const,
+      },
+      {
+        id: "runner-on-second-center-single-cutoff-home",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "runner-on-second-right-single-cutoff-third-home",
+        positions: ["CF", "LF"] as const,
+      },
+    ];
+
+    for (const check of checks) {
+      const scenario = scenarioRegistry.find((entry) => entry.summary.id === check.id);
+
+      expect(scenario).not.toBeUndefined();
+
+      for (const positionId of check.positions) {
+        const assignment = scenario?.positions.find(
+          (position) => position.position === positionId,
+        );
+        const finalPoint = assignment?.path.at(-1);
+
+        expect(finalPoint?.y).toBeLessThan(50);
+      }
+    }
+  });
+
+  it("keeps true home-pressure infield plays and the third-home rundown with dedicated short home-line backups", () => {
+    const checks = [
+      {
+        id: "runner-on-third-safety-squeeze-defense",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "runner-on-third-suicide-squeeze-wheel-play",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "runner-on-third-infield-in-grounder",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "bases-loaded-infield-in",
+        positions: ["LF", "RF"] as const,
+      },
+      {
+        id: "rundown-third-home",
+        positions: ["LF", "RF"] as const,
+      },
+    ];
+
+    for (const check of checks) {
+      const scenario = scenarioRegistry.find((entry) => entry.summary.id === check.id);
+
+      expect(scenario).not.toBeUndefined();
+
+      for (const positionId of check.positions) {
+        const assignment = scenario?.positions.find(
+          (position) => position.position === positionId,
+        );
+        const finalPoint = assignment?.path.at(-1);
+
+        expect(finalPoint?.y).toBeGreaterThanOrEqual(80);
+      }
+    }
+  });
 });

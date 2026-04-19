@@ -6,6 +6,7 @@
 - 좌표 구현 원문은 [05-outfield-hits-cutoffs-relays-layout.md](./05-outfield-hits-cutoffs-relays-layout.md)를 함께 봅니다.
 - 이 카테고리의 시나리오는 총 `6개`입니다.
 - 핵심 목표는 `처리 외야수의 정면 포구`, `cutoff 깊이`, `반대편 외야 백업`, `stop-base 유지`를 팀 공통 언어로 고정하는 것입니다.
+- 이 카테고리에서 `반대편 외야 백업`은 플레이트 뒤 직접 백업이 아니라 `middle/cutoff 뒤 리바운드 구역`을 닫는 역할로 고정합니다.
 
 ## 시나리오
 
