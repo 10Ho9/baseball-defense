@@ -25,7 +25,14 @@ describe("scenarioCategoryRegistry", () => {
         "bases-empty-3b-slow-roller-charge",
         "bases-empty-1b-slow-roller-p-cover",
       ],
-      ["runner-on-first-double-play-keystone"],
+      [
+        "runner-on-first-double-play-keystone",
+        "runner-on-first-ss-double-play-6-4-3",
+        "runner-on-first-3b-double-play-5-4-3",
+        "runner-on-first-1b-double-play-3-6-3",
+        "runners-on-first-second-middle-grounder-force-third",
+        "bases-loaded-middle-grounder-home-to-first",
+      ],
       ["runner-on-first-bunt-third-base-side"],
       ["runner-on-third-infield-in-grounder"],
       ["runner-on-second-left-single-cutoff-home"],
@@ -43,6 +50,17 @@ describe("scenarioCategoryRegistry", () => {
     expect(
       getScenarioSummariesByCategoryId("bunts-and-squeezes").map((scenario) => scenario.id),
     ).toEqual(["runner-on-first-bunt-third-base-side"]);
+
+    expect(
+      getScenarioSummariesByCategoryId("force-and-double-plays").map((scenario) => scenario.id),
+    ).toEqual([
+      "runner-on-first-double-play-keystone",
+      "runner-on-first-ss-double-play-6-4-3",
+      "runner-on-first-3b-double-play-5-4-3",
+      "runner-on-first-1b-double-play-3-6-3",
+      "runners-on-first-second-middle-grounder-force-third",
+      "bases-loaded-middle-grounder-home-to-first",
+    ]);
 
     expect(
       getScenarioSummariesByCategoryId("basic-infield-routines").map((scenario) => scenario.id),

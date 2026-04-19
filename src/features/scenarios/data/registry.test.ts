@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(11);
+    expect(scenarioRegistry).toHaveLength(16);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -11,6 +11,11 @@ describe("scenarioRegistry", () => {
       "bases-empty-3b-slow-roller-charge",
       "bases-empty-1b-slow-roller-p-cover",
       "runner-on-first-double-play-keystone",
+      "runner-on-first-ss-double-play-6-4-3",
+      "runner-on-first-3b-double-play-5-4-3",
+      "runner-on-first-1b-double-play-3-6-3",
+      "runners-on-first-second-middle-grounder-force-third",
+      "bases-loaded-middle-grounder-home-to-first",
       "runner-on-first-bunt-third-base-side",
       "runner-on-third-infield-in-grounder",
       "runner-on-second-left-single-cutoff-home",
@@ -46,5 +51,24 @@ describe("scenarioRegistry", () => {
     expect(secondBase?.throwPriority).toEqual(["1B", "Sonst Ball sichern"]);
     expect(backupPositions).toEqual(["P", "LF", "CF", "RF"]);
     expect(ballArrivalFrame?.atMs).toBe(throwEvent?.startMs ? throwEvent.startMs + throwEvent.durationMs : undefined);
+  });
+
+  it("keeps the bases-loaded middle grounder focused on the force at home first", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "bases-loaded-middle-grounder-home-to-first",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const catcher = scenario?.positions.find((assignment) => assignment.position === "C");
+    const backupPositions = scenario?.backups.map((assignment) => assignment.position);
+    const throwEvents = scenario?.animation.throwEvents;
+    const ballTrack = scenario?.animation.actorTracks.find((track) => track.actorId === "BALL");
+    const homeArrivalFrame = ballTrack?.keyframes.find((frame) => frame.atMs === 3100);
+
+    expect(catcher?.throwPriority).toEqual(["1B", "Ball sichern"]);
+    expect(backupPositions).toEqual(["P", "LF", "RF", "CF"]);
+    expect(throwEvents?.map((event) => event.toActor)).toEqual(["C", "1B"]);
+    expect(homeArrivalFrame?.atMs).toBe(throwEvents?.[0].startMs + throwEvents?.[0].durationMs);
   });
 });
