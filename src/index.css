@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #eef3e7;
+  background:
+    radial-gradient(circle at top, rgba(143, 181, 108, 0.15), transparent 35%),
+    linear-gradient(180deg, #102232 0%, #0a1623 50%, #09111a 100%);
+  font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.glass-panel {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 34, 50, 0.84),
+    rgba(10, 22, 35, 0.94)
+  );
+  box-shadow: 0 18px 40px rgba(8, 19, 31, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(243, 213, 191, 0.4) rgba(8, 19, 31, 0.24);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(243, 213, 191, 0.4);
+  border-radius: 999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(8, 19, 31, 0.24);
+}
