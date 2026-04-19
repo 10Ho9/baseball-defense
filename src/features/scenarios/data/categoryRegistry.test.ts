@@ -14,6 +14,7 @@ describe("scenarioCategoryRegistry", () => {
       "run-prevention-and-tag-ups",
       "outfield-hits-cutoffs-relays",
       "priority-and-foul-pops",
+      "special-defenses",
     ]);
 
     expect(scenarioCategorySummaryList.map((category) => category.scenarioIds)).toEqual([
@@ -61,9 +62,15 @@ describe("scenarioCategoryRegistry", () => {
         "bases-empty-first-base-foul-pop",
         "bases-empty-third-base-foul-pop",
       ],
+      [
+        "runner-on-first-steal-second-cover",
+        "runners-on-first-third-hold-defense",
+        "runners-on-first-third-break-play",
+        "rundown-third-home",
+      ],
     ]);
 
-    expect(getScenarioCategoryById("special-defenses")).toBeNull();
+    expect(getScenarioCategoryById("special-defenses")?.labelDe).toBe("Spezial-Defenses");
   });
 
   it("looks up categories from scenario ids and returns only implemented summaries", () => {
@@ -120,6 +127,15 @@ describe("scenarioCategoryRegistry", () => {
       "bases-empty-right-center-bloop",
       "bases-empty-first-base-foul-pop",
       "bases-empty-third-base-foul-pop",
+    ]);
+
+    expect(
+      getScenarioSummariesByCategoryId("special-defenses").map((scenario) => scenario.id),
+    ).toEqual([
+      "runner-on-first-steal-second-cover",
+      "runners-on-first-third-hold-defense",
+      "runners-on-first-third-break-play",
+      "rundown-third-home",
     ]);
 
     expect(

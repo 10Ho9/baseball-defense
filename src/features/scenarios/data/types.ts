@@ -25,6 +25,9 @@ export const playTypes = [
   "cutoff",
   "infield-in",
   "flyball",
+  "steal-defense",
+  "first-and-third-defense",
+  "rundown",
 ] as const;
 
 export type PlayType = (typeof playTypes)[number];

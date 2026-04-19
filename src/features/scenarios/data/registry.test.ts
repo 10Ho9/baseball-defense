@@ -2,7 +2,7 @@ import { scenarioRegistry } from "./registry";
 
 describe("scenarioRegistry", () => {
   it("contains the implemented curriculum scenarios in document order", () => {
-    expect(scenarioRegistry).toHaveLength(32);
+    expect(scenarioRegistry).toHaveLength(36);
     expect(scenarioRegistry.map((scenario) => scenario.summary.id)).toEqual([
       "bases-empty-ss-routine-grounder",
       "bases-empty-3b-routine-grounder",
@@ -36,6 +36,10 @@ describe("scenarioRegistry", () => {
       "bases-empty-right-center-bloop",
       "bases-empty-first-base-foul-pop",
       "bases-empty-third-base-foul-pop",
+      "runner-on-first-steal-second-cover",
+      "runners-on-first-third-hold-defense",
+      "runners-on-first-third-break-play",
+      "rundown-third-home",
     ]);
   });
 
@@ -81,11 +85,14 @@ describe("scenarioRegistry", () => {
     const throwEvents = scenario?.animation.throwEvents;
     const ballTrack = scenario?.animation.actorTracks.find((track) => track.actorId === "BALL");
     const homeArrivalFrame = ballTrack?.keyframes.find((frame) => frame.atMs === 3100);
+    const firstThrowArrivalMs = throwEvents?.[0]
+      ? throwEvents[0].startMs + throwEvents[0].durationMs
+      : undefined;
 
     expect(catcher?.throwPriority).toEqual(["1B", "Ball sichern"]);
     expect(backupPositions).toEqual(["P", "LF", "RF", "CF"]);
     expect(throwEvents?.map((event) => event.toActor)).toEqual(["C", "1B"]);
-    expect(homeArrivalFrame?.atMs).toBe(throwEvents?.[0].startMs + throwEvents?.[0].durationMs);
+    expect(homeArrivalFrame?.atMs).toBe(firstThrowArrivalMs);
   });
 
   it("keeps the suicide squeeze wheel play anchored in the wheel rotation to home", () => {
@@ -149,5 +156,25 @@ describe("scenarioRegistry", () => {
     expect(coverPositions).toEqual(["1B", "C", "2B"]);
     expect(backupPositions).toEqual(["P", "RF", "CF", "LF"]);
     expect(scenario?.animation.throwEvents).toEqual([]);
+  });
+
+  it("keeps the break play anchored in the SS return to home first", () => {
+    const scenario = scenarioRegistry.find(
+      (entry) => entry.summary.id === "runners-on-first-third-break-play",
+    );
+
+    expect(scenario).not.toBeUndefined();
+
+    const coverPositions = scenario?.covers.map((assignment) => assignment.position);
+    const backupPositions = scenario?.backups.map((assignment) => assignment.position);
+    const throwEvents = scenario?.animation.throwEvents;
+    const runnerOnThirdTrack = scenario?.animation.actorTracks.find(
+      (track) => track.actorId === "RUNNER_3",
+    );
+
+    expect(coverPositions).toEqual(["SS", "2B", "C", "3B", "P"]);
+    expect(backupPositions).toEqual(["CF", "LF", "RF"]);
+    expect(throwEvents?.map((event) => event.toActor)).toEqual(["SS", "C"]);
+    expect(runnerOnThirdTrack?.keyframes.at(-1)?.visible).toBe(false);
   });
 });

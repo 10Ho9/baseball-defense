@@ -36,7 +36,8 @@ describe("LibraryScreen", () => {
     expect(
       screen.getByRole("link", { name: /Pop-Ups & Priority/i }),
     ).toBeInTheDocument();
-
-    expect(screen.queryByText(/Spezial-Defenses/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Spezial-Defenses/i }),
+    ).toBeInTheDocument();
   });
 });

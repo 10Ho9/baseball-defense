@@ -11,8 +11,8 @@ export const LibraryScreen = () => {
         </h1>
       </section>
 
-      <section className="h-[calc(100svh-9rem)] sm:h-auto">
-        <div className="grid h-full grid-cols-2 grid-rows-3 gap-3 sm:grid-cols-3 sm:grid-rows-2">
+      <section className="min-h-[calc(100svh-9rem)] sm:min-h-0">
+        <div className="grid auto-rows-[minmax(8.95rem,1fr)] grid-cols-2 gap-3 sm:grid-cols-3">
           {scenarioCategorySummaryList.map((category) => (
             <ScenarioCategoryCard key={category.id} category={category} className="h-full" />
           ))}

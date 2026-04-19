@@ -41,6 +41,12 @@ export const formatPlayTypeDe = (playType: ScenarioSummary["playType"]) => {
       return "Infield In";
     case "flyball":
       return "Flyball";
+    case "steal-defense":
+      return "Steal Defense";
+    case "first-and-third-defense":
+      return "1st-and-3rd Defense";
+    case "rundown":
+      return "Rundown";
     default:
       return playType;
   }

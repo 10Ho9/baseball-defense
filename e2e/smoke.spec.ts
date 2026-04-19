@@ -13,6 +13,9 @@ test.describe("Defense trainer smoke flow", () => {
     await expect(
       page.getByRole("link", { name: /Double Plays/i }),
     ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Spezial-Defenses/i }),
+    ).toBeVisible();
   });
 
   test("shows the scenario list inside a category", async ({ page }) => {
