@@ -1,5 +1,10 @@
 import { positionLabelsDe, cn } from "../../../lib/formatters";
-import { getActiveThrowEvents, getThrowProgress, getTrackPointAtTime } from "../../animation/timeline";
+import {
+  getActiveThrowEvents,
+  getDisplayedActorPointAtTime,
+  getThrowProgress,
+  getTrackPointAtTime,
+} from "../../animation/timeline";
 import { fieldY } from "../data/fieldCoordinates";
 import { baseAnchors, foulLineAnchors } from "../data/fieldLayout";
 import type { OffenseActorId, PositionId, RunnerActorId, ScenarioDetail } from "../data/types";
@@ -16,6 +21,16 @@ type BaseballFieldProps = {
   playbackAriaLabel: string;
   onSelectPosition?: (positionId: PositionId) => void;
   onTogglePlayback?: () => void;
+};
+
+type DefensiveMarkerProps = {
+  positionId: PositionId;
+  actor: {
+    x: number;
+    y: number;
+  };
+  isSelected: boolean;
+  onSelectPosition?: (positionId: PositionId) => void;
 };
 
 const baseCoords = baseAnchors;
@@ -74,6 +89,62 @@ const offenseLabels: Record<OffenseActorId, string> = {
   BATTER_RUNNER: "BR",
 };
 
+const offenseMarkerStyle = (actorId: OffenseActorId) => {
+  if (actorId === "BATTER") {
+    return { radius: 2.1, fontSize: 1.8, labelOffset: 3.8 };
+  }
+
+  if (actorId === "BATTER_RUNNER") {
+    return { radius: 2.45, fontSize: 2, labelOffset: 4.2 };
+  }
+
+  return { radius: 2.3, fontSize: 2, labelOffset: 4.2 };
+};
+
+const DefensiveMarker = ({
+  positionId,
+  actor,
+  isSelected,
+  onSelectPosition,
+}: DefensiveMarkerProps) => {
+  const label = positionLabelsDe[positionId];
+
+  return (
+    <g transform={`translate(${actor.x} ${actor.y})`}>
+      <circle
+        cx="0"
+        cy="0"
+        r="5.8"
+        fill="transparent"
+        className="cursor-pointer"
+        onClick={() => onSelectPosition?.(positionId)}
+      />
+      <circle
+        cx="0"
+        cy="0"
+        r={isSelected ? 3.2 : 2.6}
+        fill={isSelected ? "#f3d5bf" : "#d6e3ca"}
+        stroke={isSelected ? "#ffffff" : "#183b24"}
+        strokeWidth={isSelected ? 0.75 : 0.55}
+        className="cursor-pointer transition-all"
+        onClick={() => onSelectPosition?.(positionId)}
+      />
+      <text
+        x="0"
+        y="-4.7"
+        fill={isSelected ? "#fff8ef" : "rgba(255,255,255,0.72)"}
+        fontSize="2.2"
+        fontWeight="700"
+        textAnchor="middle"
+        className="pointer-events-none"
+      >
+        {positionId}
+      </text>
+      <title>{label}</title>
+    </g>
+  );
+};
+
 export const BaseballField = ({
   scenario,
   elapsedMs,
@@ -95,7 +166,11 @@ export const BaseballField = ({
   const currentActors = Object.fromEntries(
     scenario.animation.actorTracks.map((animationTrack) => [
       animationTrack.actorId,
-      getTrackPointAtTime(animationTrack, elapsedMs),
+      getDisplayedActorPointAtTime(
+        animationTrack,
+        elapsedMs,
+        scenario.animation.throwEvents,
+      ),
     ]),
   );
 
@@ -110,6 +185,34 @@ export const BaseballField = ({
       trackEntry.actorId.startsWith("RUNNER_") ||
       trackEntry.actorId === "BATTER" ||
       trackEntry.actorId === "BATTER_RUNNER",
+  );
+  const batterRunnerTrack = offenseTracks.find(
+    (trackEntry) => trackEntry.actorId === "BATTER_RUNNER",
+  );
+  const unifiedBatterActor = batterRunnerTrack
+    ? ({
+        actorId:
+          currentActors.BATTER_RUNNER?.visible || !currentActors.BATTER?.visible
+            ? ("BATTER_RUNNER" as const)
+            : ("BATTER" as const),
+        actor:
+          currentActors.BATTER_RUNNER?.visible || !currentActors.BATTER?.visible
+            ? currentActors.BATTER_RUNNER
+            : currentActors.BATTER,
+      } satisfies {
+        actorId: "BATTER" | "BATTER_RUNNER";
+        actor:
+          | {
+              x: number;
+              y: number;
+              visible: boolean;
+            }
+          | undefined;
+      })
+    : null;
+  const secondaryOffenseTracks = offenseTracks.filter(
+    (trackEntry) =>
+      trackEntry.actorId !== "BATTER" && trackEntry.actorId !== "BATTER_RUNNER",
   );
 
   return (
@@ -308,73 +411,52 @@ export const BaseballField = ({
           {scenario.positions.map((assignment) => {
             const actor = currentActors[assignment.position];
             const isSelected = selectedPositionId === assignment.position;
-            const label = positionLabelsDe[assignment.position];
 
             return (
-              <g key={assignment.position}>
-                <circle
-                  cx={actor.x}
-                  cy={actor.y}
-                  r="5.8"
-                  fill="transparent"
-                  className="cursor-pointer"
-                  onClick={() => onSelectPosition?.(assignment.position)}
-                />
-                <circle
-                  cx={actor.x}
-                  cy={actor.y}
-                  r={isSelected ? 3.2 : 2.6}
-                  fill={isSelected ? "#f3d5bf" : "#d6e3ca"}
-                  stroke={isSelected ? "#ffffff" : "#183b24"}
-                  strokeWidth={isSelected ? 0.75 : 0.55}
-                  className="cursor-pointer transition-all"
-                  onClick={() => onSelectPosition?.(assignment.position)}
-                />
-                <text
-                  x={actor.x}
-                  y={actor.y - 4.7}
-                  fill={isSelected ? "#fff8ef" : "rgba(255,255,255,0.72)"}
-                  fontSize="2.2"
-                  fontWeight="700"
-                  textAnchor="middle"
-                  className="pointer-events-none"
-                >
-                  {assignment.position}
-                </text>
-                <title>{label}</title>
-              </g>
+              <DefensiveMarker
+                key={assignment.position}
+                positionId={assignment.position}
+                actor={actor}
+                isSelected={isSelected}
+                onSelectPosition={onSelectPosition}
+              />
             );
           })}
 
-          {offenseTracks
-            .map((animationTrack) => {
-              const actorId = animationTrack.actorId as OffenseActorId;
-              const actor = currentActors[actorId as keyof typeof currentActors] as
+          {[
+            ...(unifiedBatterActor ? [unifiedBatterActor] : []),
+            ...secondaryOffenseTracks.map((animationTrack) => ({
+              actorId: animationTrack.actorId as OffenseActorId,
+              actor: currentActors[animationTrack.actorId as keyof typeof currentActors] as
                 | { x: number; y: number; visible: boolean }
-                | undefined;
+                | undefined,
+            })),
+          ]
+            .map((animationTrack) => {
+              const actorId = animationTrack.actorId;
+              const actor = animationTrack.actor;
 
               if (!actor?.visible) {
                 return null;
               }
 
-              const isBatter = actorId === "BATTER";
-              const isBatterRunner = actorId === "BATTER_RUNNER";
+              const markerStyle = offenseMarkerStyle(actorId);
 
               return (
                 <g key={actorId}>
                   <circle
                     cx={actor.x}
                     cy={actor.y}
-                    r={isBatter ? "2.1" : isBatterRunner ? "2.45" : "2.3"}
-                    fill={isBatter ? "#d99168" : "#c96d42"}
+                    r={markerStyle.radius}
+                    fill={actorId === "BATTER" ? "#d99168" : "#c96d42"}
                     stroke="#fff2df"
-                    strokeWidth={isBatter ? "0.5" : "0.55"}
+                    strokeWidth={actorId === "BATTER" ? "0.5" : "0.55"}
                   />
                   <text
                     x={actor.x}
-                    y={actor.y - (isBatter ? 3.8 : 4.2)}
+                    y={actor.y - markerStyle.labelOffset}
                     fill="#fff2df"
-                    fontSize={isBatter ? "1.8" : "2"}
+                    fontSize={markerStyle.fontSize}
                     fontWeight="700"
                     textAnchor="middle"
                     className="pointer-events-none"

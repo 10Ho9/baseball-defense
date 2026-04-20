@@ -17,7 +17,7 @@
 - Primary Out: `Home`
 - Fallback: `Infield control, no extra-base`
 - 핵심 움직임:
-  - `LF`는 몸 앞 처리와 빠른 릴리스를 만든다.
+  - `LF`는 몸 앞 처리 뒤 공을 안쪽으로 통과시키며 Home 라인으로 릴리스한다.
   - `SS`는 Home cutoff 라인을 정렬한다.
   - `3B`는 3루를 유지한다.
   - `P`는 Home 백업을 돈다.
@@ -35,7 +35,7 @@
 - Primary Out: `Home`
 - Fallback: `3B/2B 추가 진루 억제`
 - 핵심 움직임:
-  - `CF`는 타구를 몸 정면에서 처리한다.
+  - `CF`는 타구를 몸 정면에서 처리한 뒤 Home 방향으로 계속 통과해 릴리스한다.
   - `SS`는 송구 라인을 맞추는 고정 cutoff가 된다.
   - `C`는 Home 타깃과 리바운드 대비를 한다.
 - 백업/정렬:
@@ -52,7 +52,7 @@
 - Primary Out: `Home`
 - Fallback: `3B stop`
 - 핵심 움직임:
-  - `RF`는 낮고 빠른 송구를 만든다.
+  - `RF`는 공을 끊은 뒤 안쪽 스텝으로 Home/3루 판단 송구를 만든다.
   - `1B`는 Home 방향 첫 cutoff를 맡는다.
   - `3B`는 stop-base 역할을 확실히 한다.
 - 백업/정렬:
@@ -69,7 +69,7 @@
 - Primary Out: `3B if reckless runner`
 - Fallback: `Hold at 3B`
 - 핵심 움직임:
-  - `LF`는 타구를 끊어 읽고 빠르게 relay에 맞춘다.
+  - `LF`는 타구를 끊은 뒤 안쪽으로 이어서 3루 relay에 맞춘다.
   - `SS`는 중계와 3루 방향 라인을 조정한다.
   - `3B`는 태그 준비와 stop 역할을 동시에 한다.
 - 백업/정렬:
@@ -86,7 +86,7 @@
 - Primary Out: `3B if runner over-commits`
 - Fallback: `Hold at 3B`
 - 핵심 움직임:
-  - `RF`는 공을 공격적으로 처리하고 낮은 송구를 만든다.
+  - `RF`는 공을 공격적으로 처리한 뒤 안쪽으로 이어서 3루 relay에 맞춘다.
   - `2B`는 우측 relay의 중심이 된다.
   - `SS`는 2루 주변과 추가 진루를 관리한다.
   - `3B`는 stop-base를 지킨다.

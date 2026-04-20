@@ -19,7 +19,6 @@ export const FIRST_BASE = baseAnchors.first;
 export const SECOND_BASE = baseAnchors.second;
 export const THIRD_BASE = baseAnchors.third;
 export const BATTER_BOX: FieldPoint = { x: 44.5, y: STARTS.C.y };
-export const BATTER_LANE_ENTRY = p(54, 82.2);
 export const HOME_RECEIVE_TARGET = p(50, 86.5);
 export const HOME_BACKUP_ENTRY = p(50, 74);
 export const HOME_BACKUP_SHALLOW = p(50, 72);
@@ -82,7 +81,6 @@ export const batterRunnerTrack = (
   track("BATTER_RUNNER", [
     [0, BATTER_BOX, false],
     [301, BATTER_BOX, true],
-    [360, BATTER_LANE_ENTRY, true],
     ...keyframes,
   ]);
 

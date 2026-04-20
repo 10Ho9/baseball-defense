@@ -22,6 +22,7 @@
 4. 그 결과를 `ScenarioDetail` 구조로 옮기고 해당 카테고리 파일에 배치합니다.
 5. `scenarios.ts`에서 카테고리 배열을 문서 순서대로 합칩니다.
 6. 애니메이션, 퀴즈, acceptance checklist는 같은 시나리오 정의에서 파생합니다.
+7. `throwEvents.startMs`는 `BALL`과 송구자 track의 실제 릴리스 좌표 시점과 맞춰 둡니다.
 
 ## 핵심 엔티티
 
@@ -222,6 +223,7 @@ export type ScenarioDetail = {
 - `positions`는 항상 9명 수비수를 모두 포함합니다.
 - `covers`와 `backups`는 문장으로 명시된 책임이 있어야 합니다.
 - 문서상 실제로 움직이는 support 역할은 `covers` 또는 `backups` 배열에도 빠짐없이 들어가야 합니다.
+- 반복되는 커버/백업 좌표나 역할 문구는 shared helper로 재사용할 수 있지만, 최종 시나리오 데이터에는 누가 어디를 맡는지가 명시적으로 남아 있어야 합니다.
 - `animation`, `quiz`, `acceptanceChecklist`는 전술 문서와 다른 정답을 만들면 안 됩니다.
 - `*-layout.md`에 `Move 1`, `Move 2 / Hold`가 있으면 `positions.path`와 `animation.actorTracks`에도 같은 중간 노드가 살아 있어야 합니다.
 - `throwEvents`의 종료 시점과 `BALL` 트랙의 도착 시점은 사실상 일치해야 합니다.

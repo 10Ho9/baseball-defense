@@ -337,7 +337,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         track("1B", [[0, p(67.5, 62.5)], [4800, p(69, 63)]]),
         track("2B", [[0, p(58, 60.62)], [4800, p(55.5, 63.5)]]),
         track("3B", [[0, p(28, 62.98)], [4800, p(29.5, 64.5)]]),
-        track("SS", [[0, p(43, 50)], [4800, p(45, 57)]]),
+        track("SS", [[0, p(43, 50)], [1800, p(45, 57)], [4800, p(45, 57)]]),
         track("LF", [[0, STARTS.LF], [4800, p(18, 68)]]),
         track("CF", [[0, STARTS.CF], [4800, SECOND_BASE_DEEP_BACKUP]]),
         track("RF", [[0, STARTS.RF], [4800, p(82, 68)]]),
@@ -474,10 +474,11 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         throwPriority: ["Home", "3B"],
       }),
       position("LF", {
-        path: [p(26, 46), p(30.5, 42.5)],
+        path: [p(26, 46), p(30.5, 47)],
         prePitchAlignmentDe: "Links tief mit Fokus auf sicheren Catch",
         firstStepDe: "Zum Ball arbeiten und den Catch absichern",
-        primaryResponsibilityDe: "Den Catch sichern und danach einen starken Wurf an Home aufbauen",
+        primaryResponsibilityDe:
+          "Den Catch sichern und danach ueber einen Innenschritt den starken Wurf an Home aufbauen",
         secondaryResponsibilityDe: "Keine instabile Fangaktion für den Wurf riskieren",
         throwPriority: ["Home", "SS"],
       }),
@@ -528,7 +529,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         track("2B", [[0, STARTS["2B"]], [5000, p(56, 46)]]),
         track("3B", [[0, STARTS["3B"]], [5000, THIRD_BASE_BAG_TARGET]]),
         track("SS", [[0, STARTS.SS], [5000, p(42, 55)]]),
-        track("LF", [[0, STARTS.LF], [1800, p(26, 46)], [2800, p(30.5, 42.5)], [5000, p(30.5, 42.5)]]),
+        track("LF", [[0, STARTS.LF], [1800, p(26, 46)], [3000, p(30.5, 47)], [5000, p(30.5, 47)]]),
         track("CF", [[0, STARTS.CF], [5000, p(34, 38)]]),
         track("RF", [[0, STARTS.RF], [5000, p(58, 33)]]),
         track("RUNNER_3", [
@@ -541,7 +542,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         track("BALL", [
           [0, p(50, 84), true],
           [1400, p(26, 46), true],
-          [2800, p(30.5, 42.5), true],
+          [3000, p(30.5, 47), true],
           [4300, p(50, 86.5), true],
           [5000, p(50, 86.5), false],
         ]),
@@ -663,7 +664,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         throwPriority: ["SS"],
       }),
       position("CF", {
-        path: [p(50, 38), SHALLOW_CENTER_STOP],
+        path: [p(50, 38), p(50, 38)],
         prePitchAlignmentDe: "Mittig unter dem Flyball",
         firstStepDe: "Den Catch sichern und danach die Wurfrichtung stabilisieren",
         primaryResponsibilityDe: "Catch sichern und eine saubere Linie zum Cutoff aufbauen",
@@ -710,7 +711,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         track("3B", [[0, STARTS["3B"]], [5000, THIRD_BASE_BAG_TARGET]]),
         track("SS", [[0, STARTS.SS], [3000, p(50, 54.5)], [5000, p(50, 54.5)]]),
         track("LF", [[0, STARTS.LF], [5000, p(43, 31)]]),
-        track("CF", [[0, STARTS.CF], [1800, p(50, 38)], [2600, SHALLOW_CENTER_STOP], [5000, SHALLOW_CENTER_STOP]]),
+        track("CF", [[0, STARTS.CF], [1800, p(50, 38)], [2800, p(50, 38)], [5000, p(50, 38)]]),
         track("RF", [[0, STARTS.RF], [5000, p(57, 31)]]),
         track("RUNNER_3", [
           [0, THIRD_BASE, true],
@@ -722,7 +723,7 @@ export const runPreventionAndTagUpsScenarioDetails: ScenarioDetail[] = [
         track("BALL", [
           [0, p(50, 84), true],
           [1500, p(50, 38), true],
-          [2600, SHALLOW_CENTER_STOP, true],
+          [2800, p(50, 38), true],
           [3800, p(50, 54.5), true],
           [5000, p(50, 54.5), false],
         ]),
