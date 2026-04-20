@@ -21,8 +21,18 @@ export const THIRD_BASE = baseAnchors.third;
 export const BATTER_BOX: FieldPoint = { x: 44.5, y: STARTS.C.y };
 export const BATTER_LANE_ENTRY = p(54, 82.2);
 export const HOME_RECEIVE_TARGET = p(50, 86.5);
+export const HOME_BACKUP_ENTRY = p(50, 74);
+export const HOME_BACKUP_SHALLOW = p(50, 72);
+export const HOME_LINE_SHORT_BACKUP = p(50, 80);
+export const HOME_DEEP_BACKUP = p(50, 90);
 export const FIRST_BASE_BAG_TARGET = p(69, 63);
+export const THIRD_BASE_BAG_TARGET = p(31, 63);
 export const FIRST_BASE_FOUL_BACKUP = p(82, 68);
+export const SECOND_BASE_COVER_TARGET = p(50.5, 44.5);
+export const SECOND_BASE_DEEP_BACKUP = p(50, 36);
+export const SHALLOW_CENTER_STOP = p(50, 34.5);
+export const LEFT_HOME_LINE_BACKUP = p(39, 84);
+export const RIGHT_HOME_LINE_BACKUP = p(61, 84);
 export const LEFT_CENTER_PINCH = p(44, 30.5);
 export const RIGHT_CENTER_PINCH = p(56, 30.5);
 export const DOUBLE_PLAY_1B_START = specialDefensiveStarts.doublePlayFirstBase;
@@ -105,6 +115,30 @@ export const support = (
   targetDe,
   detailDe,
 });
+
+export const backupBehindHome = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "Hinter Home", detailDe);
+
+export const coverFirstBase = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "1B", detailDe);
+
+export const coverHome = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "Home", detailDe);
+
+export const coverSecondBase = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "2B", detailDe);
+
+export const coverThirdBase = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "3B", detailDe);
+
+export const backupFirstBaseLine = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "1B-Linie", detailDe);
+
+export const backupThirdBaseLine = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "3B-Linie", detailDe);
+
+export const backupSecondBaseDeep = (positionId: PositionId, detailDe: string) =>
+  support(positionId, "2B tief", detailDe);
 
 export const checklist = ({
   start,

@@ -15,6 +15,8 @@ import {
   SECOND_BASE,
   STARTS,
   THIRD_BASE,
+  backupFirstBaseLine,
+  coverFirstBase,
   batterRunnerTrack,
   batterTrack,
   checklist,
@@ -690,7 +692,7 @@ export const basicInfieldRoutinesScenarioDetails: ScenarioDetail[] = [
       ],
       backups: [
         support("P", "Innenraum rechts", "Bleibt als kurzes Trail-Backup aus der Laufbahn."),
-        support("RF", "1B-Linie", "Sichert den langen Überwurf auf der Foul-Seite."),
+        backupFirstBaseLine("RF", "Sichert den langen Überwurf auf der Foul-Seite."),
         support("CF", "Right-Center", "Schließt den Raum hinter RF."),
         support("LF", "Linker Gap", "Räumt einen langen Gegenüberwurf auf."),
       ],
@@ -1044,7 +1046,7 @@ export const basicInfieldRoutinesScenarioDetails: ScenarioDetail[] = [
         }),
       ],
       covers: [
-        support("P", "1B", "Übernimmt 1B klar hinter dem chargenden 1B."),
+        coverFirstBase("P", "Übernimmt 1B klar hinter dem chargenden 1B."),
         support("SS", "Mitte", "Hält die Middle Safety hinter der Rechtsverschiebung."),
       ],
       backups: [
